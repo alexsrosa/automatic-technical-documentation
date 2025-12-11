@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  # 1. Database (MongoDB)
+  mongodb:
+    image: mongo:latest
+    ports: ["27017:27017"]
+    volumes: ["mongo_data:/data/db"]
+    networks:
+      - docgen-network
+
+  # 2. Caching (Redis)
+  redis:
+    image: redis:alpine
+    ports: ["6379:6379"]
+    networks:
+      - docgen-network
+
+  # 3. Messaging (RabbitMQ)
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports: ["5672:5672", "15672:15672"]
+    networks:
+      - docgen-network
+
+networks:
+  docgen-network:
+    name: docgen-network
+    driver: bridge
+
+volumes:
+  mongo_data:

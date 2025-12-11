@@ -1,0 +1,28 @@
+# OS & IDEs
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.iml
+
+# Node
+node_modules/
+dist/
+.next/
+coverage/
+.env.local
+
+# Java
+target/
+*.class
+*.jar
+
+# Logs
+logs/
+*.log
+
+# DocGen
+mongo_data/
+postgres_keycloak_data/
+prometheus_data/
+grafana_data/
