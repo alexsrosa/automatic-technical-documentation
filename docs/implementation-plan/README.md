@@ -30,7 +30,7 @@ Each phase contains a list of **STEPs**. Each STEP follows this format:
 ```
 
 ## Progress Tracking
-- [x] **Phase 1** — Infrastructure & Setup (STEP-001, STEP-002 Done)
+- [x] **Phase 1** — Infrastructure & Setup (All Steps Done)
 - [ ] **Phase 2** — Core Service
 - [ ] **Phase 3** — Frontend (BFF)
 - [ ] **Phase 4** — AI Worker
