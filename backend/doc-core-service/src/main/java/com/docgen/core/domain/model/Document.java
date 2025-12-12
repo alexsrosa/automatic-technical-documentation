@@ -21,7 +21,7 @@ public class Document {
     private DocumentStatus status;
     private List<Requirement> requirements;
     private LocalDateTime generatedAt;
-    
+
     public enum DocumentType {
         TECHNICAL_SPEC,
         API_DOCS,
