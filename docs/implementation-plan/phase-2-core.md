@@ -4,7 +4,7 @@
 
 ## Steps
 
-### STEP-005: Core Service Scaffolding (Hexagonal)
+### CORE-001: Core Service Scaffolding (Hexagonal)
 **Description:**
 - Setup Spring Boot project for `doc-core-service`.
 - Create package structure: `domain`, `application`, `infrastructure`.
@@ -14,7 +14,7 @@
 - `/backend/doc-core-service/`
 
 **Dependencies:**
-- STEP-001
+- SETUP-001
 
 **Business Value:**
 - Establishes the core backend service structure enforcing separation of concerns.
@@ -25,7 +25,7 @@
 
 ---
 
-### STEP-006: Domain Modeling & Ports
+### CORE-002: Domain Modeling & Ports
 **Description:**
 - Define entities: `Project`, `Document`, `Requirement`.
 - Define Repository interfaces (Output Ports).
@@ -35,7 +35,7 @@
 - `/backend/doc-core-service/src/main/java/com/docgen/core/domain/`
 
 **Dependencies:**
-- STEP-005
+- CORE-001
 
 **Business Value:**
 - Captures business rules without technical debt or framework coupling.
@@ -47,7 +47,7 @@
 
 ---
 
-### STEP-007: MongoDB Adapter Implementation
+### CORE-003: MongoDB Adapter Implementation
 **Description:**
 - Implement Repository interfaces using Spring Data MongoDB.
 - Configure MongoDB connection.
@@ -56,7 +56,7 @@
 - `/backend/doc-core-service/src/main/java/com/docgen/core/infrastructure/adapters/output/persistence/`
 
 **Dependencies:**
-- STEP-002, STEP-006
+- SETUP-002, CORE-002
 
 **Business Value:**
 - Enables data persistence.
@@ -67,7 +67,7 @@
 
 ---
 
-### STEP-008: RabbitMQ Publisher Adapter
+### CORE-004: RabbitMQ Publisher Adapter
 **Description:**
 - Implement the `EventPublisher` port.
 - Configure Spring AMQP to publish messages to the `doc-generation-exchange`.
@@ -76,7 +76,7 @@
 - `/backend/doc-core-service/src/main/java/com/docgen/core/infrastructure/adapters/output/messaging/`
 
 **Dependencies:**
-- STEP-002, STEP-006
+- SETUP-002, CORE-002
 
 **Business Value:**
 - Decouples document generation requests from processing.
@@ -86,7 +86,7 @@
 
 ---
 
-### STEP-009: Application Services & REST API
+### CORE-005: Application Services & REST API
 **Description:**
 - Implement Use Cases (`CreateProject`, `RequestGeneration`).
 - Create REST Controllers (`ProjectController`, `DocumentController`).
@@ -97,7 +97,7 @@
 - `/backend/doc-core-service/src/main/java/com/docgen/core/infrastructure/adapters/input/web/`
 
 **Dependencies:**
-- STEP-003, STEP-007, STEP-008
+- SETUP-003, CORE-003, CORE-004
 
 **Business Value:**
 - Exposes business logic to the outside world (BFF).
@@ -106,3 +106,33 @@
 - `POST /projects` creates a project.
 - `POST /documents` triggers a message to RabbitMQ.
 - Endpoints require a valid JWT from Keycloak.
+
+---
+
+### CORE-006: Hexagonal Refactoring & API Hardening
+**Description:**
+- **Hexagonal Purity:** Refactor Controllers to interact *only* with Use Case interfaces (Input Ports), removing any direct dependencies on Repositories.
+- **DTO Implementation:** Introduce `record` based DTOs (`CreateProjectRequest`, `ProjectResponse`) to decouple API contracts from Domain Entities.
+- **Mapper Strategy:** Implement `MapStruct` interfaces for type-safe, efficient conversion between DTOs and Domain Models.
+- **Boilerplate Reduction:** Apply `Lombok` (@Data, @Builder, @RequiredArgsConstructor) across the codebase to reduce verbosity.
+- **Documentation:** Integrate `Swagger/OpenAPI` with dedicated interface files (`*Doc.java`) to keep Controllers clean.
+
+**Affected Files:**
+- `/backend/doc-core-service/src/main/java/com/docgen/core/infrastructure/adapters/input/web/dto/`
+- `/backend/doc-core-service/src/main/java/com/docgen/core/infrastructure/adapters/input/web/mapper/`
+- `/backend/doc-core-service/src/main/java/com/docgen/core/infrastructure/adapters/input/web/doc/`
+
+**Dependencies:**
+- CORE-005
+
+**Business Value:**
+- Ensures long-term maintainability and strict adherence to architectural patterns.
+- Provides clear, interactive API documentation for frontend developers.
+- Improves code readability and testability.
+
+**Acceptance Criteria:**
+- Controllers have 0 direct dependencies on Repositories.
+- Swagger UI (`/swagger-ui.html`) is accessible and fully documented.
+- All DTOs are immutable `records`.
+- 100% Test Coverage for Mappers and DTOs.
+

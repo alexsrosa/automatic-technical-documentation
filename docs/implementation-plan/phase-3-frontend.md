@@ -4,41 +4,46 @@
 
 ## Steps
 
-### STEP-010: Next.js Setup & Keycloak Integration
+### FRONT-001: Next.js Setup & Keycloak Integration
 **Description:**
 - Initialize Next.js project (App Router).
+- **Architecture Setup:** Create folder structure enforcing Hexagonal Architecture (`src/domain`, `src/adapters`, `src/app`) as per `technical-specification.md`.
 - Configure `next-auth` or `oidc-client` for Keycloak authentication.
 - Implement protected routes.
 
 **Affected Files:**
 - `/frontend/src/app/`
+- `/frontend/src/domain/`
+- `/frontend/src/adapters/`
 - `/frontend/src/lib/auth.ts`
 
 **Dependencies:**
-- STEP-001, STEP-003
+- SETUP-001, SETUP-003
 
 **Business Value:**
 - Secures user access and manages sessions.
+- Establishes strict architectural boundaries from the start.
 
 **Acceptance Criteria:**
 - User can login via Keycloak.
 - Access token is securely stored (server-side session or cookie).
 - Redirect to login on unauthorized access.
+- Domain logic is isolated from Next.js framework code.
 
 ---
 
-### STEP-011: Project Management UI
+### FRONT-002: Project Management UI
 **Description:**
 - Create pages to list, create, and edit projects.
 - Implement API routes (BFF) to proxy requests to Core Service.
-- Validate inputs using `Zod`.
+- Validate inputs using `Zod` in the BFF layer.
 
 **Affected Files:**
 - `/frontend/src/app/projects/`
 - `/frontend/src/adapters/api/`
 
 **Dependencies:**
-- STEP-009, STEP-010
+- CORE-005, FRONT-001
 
 **Business Value:**
 - Allows users to manage their documentation projects.
@@ -46,10 +51,11 @@
 **Acceptance Criteria:**
 - User can create a new project.
 - List of projects is fetched from Core Service.
+- Inputs are validated before reaching the Core Service.
 
 ---
 
-### STEP-012: Requirements Editor
+### FRONT-003: Requirements Editor
 **Description:**
 - Implement a Rich Text Editor (e.g., TipTap or Slate).
 - Allow input of functional and non-functional requirements.
@@ -58,7 +64,7 @@
 - `/frontend/src/components/editor/`
 
 **Dependencies:**
-- STEP-011
+- FRONT-002
 
 **Business Value:**
 - Provides the input mechanism for the AI generation.
@@ -69,7 +75,7 @@
 
 ---
 
-### STEP-013: Document Preview & WebSocket Integration
+### FRONT-004: Document Preview & WebSocket Integration
 **Description:**
 - Implement split-screen view.
 - Render Markdown and Mermaid/PlantUML diagrams.
@@ -80,7 +86,7 @@
 - `/frontend/src/hooks/useDocumentStream.ts`
 
 **Dependencies:**
-- STEP-009, STEP-012
+- CORE-005, FRONT-003
 
 **Business Value:**
 - Real-time feedback loop for the user.
@@ -88,3 +94,24 @@
 **Acceptance Criteria:**
 - Document updates from the server appear instantly.
 - Diagrams render correctly.
+
+---
+
+### FRONT-005: Refinement & Export Features
+**Description:**
+- **Refinement:** Implement UI for section-level comments to trigger partial regeneration.
+- **Export:** Implement actions to export documents as Markdown, PDF, and HTML.
+
+**Affected Files:**
+- `/frontend/src/components/preview/`
+- `/frontend/src/app/documents/[id]/`
+
+**Dependencies:**
+- FRONT-004
+
+**Business Value:**
+- Allows users to polish and distribute the generated documentation.
+
+**Acceptance Criteria:**
+- User can comment on a specific section and trigger regeneration.
+- Export buttons download the document in the selected format.

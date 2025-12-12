@@ -4,7 +4,7 @@
 
 ## Steps
 
-### STEP-017: Distributed Tracing & Logging
+### OPS-001: Distributed Tracing & Logging
 **Description:**
 - Instrument all services with Micrometer Tracing / OpenTelemetry.
 - Ensure Trace IDs are propagated (BFF -> Core -> Rabbit -> Worker).
@@ -14,7 +14,7 @@
 - All Services (`pom.xml`, `application.yml`)
 
 **Dependencies:**
-- STEP-004, STEP-009, STEP-014
+- SETUP-004, CORE-005, WORKER-001
 
 **Business Value:**
 - Ability to debug issues across microservices.
@@ -25,7 +25,7 @@
 
 ---
 
-### STEP-018: Performance Testing (JMeter/K6)
+### OPS-002: Performance Testing (JMeter/K6)
 **Description:**
 - Create load test scripts.
 - Test endpoint latency and queue throughput.
@@ -46,10 +46,10 @@
 
 ---
 
-### STEP-019: End-to-End Testing (Playwright)
+### OPS-003: End-to-End Testing (Playwright)
 **Description:**
 - Create E2E test suite covering critical paths:
-  - Login -> Create Project -> Generate Doc -> View Result.
+- Login -> Create Project -> Generate Doc -> View Result.
 - Integrate into CI/CD pipeline.
 
 **Affected Files:**
