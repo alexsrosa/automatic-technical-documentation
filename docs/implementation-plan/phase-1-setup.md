@@ -4,7 +4,7 @@
 
 ## Steps
 
-### SETUP-001: Initial Project Configuration
+### SETUP-001: Initial Project Configuration (DONE)
 **Description:**
 - ~~Create the folder structure defined in `technical-specification.md`.~~
 - ~~Initialize `package.json` for Frontend.~~
@@ -30,7 +30,7 @@
 
 ---
 
-### SETUP-002: Docker Infrastructure (Data & Messaging)
+### SETUP-002: Docker Infrastructure (Data & Messaging) (DONE)
 **Description:**
 - ~~Create `docker/docker-compose-infra.yml`.~~
 - ~~Configure `MongoDB`, `Redis`, and `RabbitMQ`.~~
@@ -51,7 +51,7 @@
 
 ---
 
-### SETUP-003: Keycloak Setup
+### SETUP-003: Keycloak Setup (DONE)
 **Description:**
 - ~~Add `Postgres` (for Keycloak) and `Keycloak` to `docker-compose-infra.yml`.~~
 - ~~Configure realm `DocGenRealm` and client `docgen-web`.~~
@@ -74,7 +74,7 @@
 
 ---
 
-### SETUP-004: Observability Stack
+### SETUP-004: Observability Stack (DONE)
 **Description:**
 - ~~Add `Prometheus`, `Grafana`, `Loki`, and `Promtail` to `docker-compose-infra.yml`.~~
 - ~~Create configuration files in `/docker/config/`.~~

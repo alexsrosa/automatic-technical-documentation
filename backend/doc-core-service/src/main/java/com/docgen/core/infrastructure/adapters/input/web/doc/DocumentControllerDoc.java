@@ -2,7 +2,9 @@ package com.docgen.core.infrastructure.adapters.input.web.doc;
 
 import com.docgen.core.infrastructure.adapters.input.web.dto.CreateDocumentRequest;
 import com.docgen.core.infrastructure.adapters.input.web.dto.DocumentResponse;
+import com.docgen.core.infrastructure.adapters.input.web.dto.UpdateDocumentRequest;
 import io.swagger.v3.oas.annotations.Operation;
+
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -54,4 +56,15 @@ public interface DocumentControllerDoc {
     @GetMapping("/{id}")
     ResponseEntity<DocumentResponse> getDocument(
             @Parameter(description = "Document ID", required = true) @PathVariable String id);
+
+    @Operation(summary = "Update document", description = "Updates a document (e.g. adding requirements)")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Document updated successfully",
+                    content = @Content(schema = @Schema(implementation = DocumentResponse.class))),
+            @ApiResponse(responseCode = "404", description = "Document not found")
+    })
+    @PutMapping("/{id}")
+    ResponseEntity<DocumentResponse> updateDocument(
+            @Parameter(description = "Document ID", required = true) @PathVariable String id,
+            @Parameter(description = "Update request", required = true) @RequestBody UpdateDocumentRequest request);
 }

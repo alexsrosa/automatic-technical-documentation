@@ -4,9 +4,11 @@ import com.docgen.core.domain.model.Document;
 import com.docgen.core.domain.ports.input.CreateDocumentUseCase;
 import com.docgen.core.domain.ports.input.GetDocumentUseCase;
 import com.docgen.core.domain.ports.input.RequestGenerationUseCase;
+import com.docgen.core.domain.ports.input.UpdateDocumentUseCase;
 import com.docgen.core.infrastructure.adapters.input.web.doc.DocumentControllerDoc;
 import com.docgen.core.infrastructure.adapters.input.web.dto.CreateDocumentRequest;
 import com.docgen.core.infrastructure.adapters.input.web.dto.DocumentResponse;
+import com.docgen.core.infrastructure.adapters.input.web.dto.UpdateDocumentRequest;
 import com.docgen.core.infrastructure.adapters.input.web.mapper.WebDocumentMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,6 +26,7 @@ public class DocumentController implements DocumentControllerDoc {
 
     private final RequestGenerationUseCase requestGenerationUseCase;
     private final CreateDocumentUseCase createDocumentUseCase;
+    private final UpdateDocumentUseCase updateDocumentUseCase;
     private final GetDocumentUseCase getDocumentUseCase;
     private final WebDocumentMapper mapper;
 
@@ -53,6 +56,17 @@ public class DocumentController implements DocumentControllerDoc {
         return getDocumentUseCase.getDocumentById(id)
                 .map(mapper::toResponse)
                 .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @Override
+    public ResponseEntity<DocumentResponse> updateDocument(String id, UpdateDocumentRequest request) {
+        return getDocumentUseCase.getDocumentById(id)
+                .map(existingDocument -> {
+                    Document documentToUpdate = mapper.updateDomain(existingDocument, request);
+                    Document saved = updateDocumentUseCase.updateDocument(documentToUpdate);
+                    return ResponseEntity.ok(mapper.toResponse(saved));
+                })
                 .orElse(ResponseEntity.notFound().build());
     }
 }

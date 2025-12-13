@@ -4,7 +4,7 @@
 
 ## Steps
 
-### WORKER-001: Worker Service Setup
+### WORKER-001: Worker Service Setup (DONE)
 **Description:**
 - Setup Spring Boot project for `ai-worker-service`.
 - Configure RabbitMQ listener.
@@ -30,7 +30,7 @@
 
 ---
 
-### WORKER-002: Prompt Engineering & Generation Logic
+### WORKER-002: Prompt Engineering & Generation Logic (DONE)
 **Description:**
 - Implement the "Golden Prompts" strategy.
 - Create logic to generate text and diagrams based on requirements.
@@ -54,7 +54,7 @@
 
 ---
 
-### WORKER-003: Result Handling & Feedback Loop
+### WORKER-003: Result Handling & Feedback Loop (DONE)
 **Description:**
 - Post the generated result back to Core Service (via API or Queue).
 - Handle failures and retries (Dead Letter Queues).

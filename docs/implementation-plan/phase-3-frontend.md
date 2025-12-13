@@ -4,43 +4,57 @@
 
 ## Steps
 
-### FRONT-001: Next.js Setup & Keycloak Integration
+### FRONT-000: Monorepo Restructuring & BFF Separation (DONE)
 **Description:**
-- Initialize Next.js project (App Router).
-- **Architecture Setup:** Create folder structure enforcing Hexagonal Architecture (`src/domain`, `src/adapters`, `src/app`) as per `technical-specification.md`.
-- Configure `next-auth` or `oidc-client` for Keycloak authentication.
+- Reorganize `frontend` into a monorepo structure with `client` (Next.js) and `server` (Node.js BFF).
+- Implement explicit BFF layer with Express to handle aggregation, transformation, and auth validation.
+- Configure `concurrently` for unified development.
+
+**Affected Files:**
+- `/frontend/client/`
+- `/frontend/server/`
+- `/frontend/package.json`
+
+**Business Value:**
+- Clear separation of concerns.
+- Independent deployment capability.
+
+---
+
+### FRONT-001: Next.js Setup & Keycloak Integration (DONE)
+**Description:**
+- Initialize Next.js project (App Router) in `frontend/client`.
+- **Architecture Setup:** Create folder structure enforcing Hexagonal Architecture.
+- Configure `next-auth` for Keycloak authentication.
 - Implement protected routes.
 
 **Affected Files:**
-- `/frontend/src/app/`
-- `/frontend/src/domain/`
-- `/frontend/src/adapters/`
-- `/frontend/src/lib/auth.ts`
+- `/frontend/client/src/app/`
+- `/frontend/client/src/lib/auth.ts`
 
 **Dependencies:**
 - SETUP-001, SETUP-003
 
 **Business Value:**
 - Secures user access and manages sessions.
-- Establishes strict architectural boundaries from the start.
 
 **Acceptance Criteria:**
 - User can login via Keycloak.
-- Access token is securely stored (server-side session or cookie).
-- Redirect to login on unauthorized access.
-- Domain logic is isolated from Next.js framework code.
+- Access token is securely stored.
+- Domain logic is isolated.
 
 ---
 
-### FRONT-002: Project Management UI
+### FRONT-002: Project Management UI (DONE)
 **Description:**
-- Create pages to list, create, and edit projects.
-- Implement API routes (BFF) to proxy requests to Core Service.
+- Create pages to list, create, and edit projects in `client`.
+- Implement API routes in `server` (BFF) using Controller/Gateway pattern.
 - Validate inputs using `Zod` in the BFF layer.
 
 **Affected Files:**
-- `/frontend/src/app/projects/`
-- `/frontend/src/adapters/api/`
+- `/frontend/client/src/app/projects/`
+- `/frontend/server/src/controllers/`
+- `/frontend/server/src/gateways/`
 
 **Dependencies:**
 - CORE-005, FRONT-001
@@ -55,7 +69,7 @@
 
 ---
 
-### FRONT-003: Requirements Editor
+### FRONT-003: Requirements Editor (DONE)
 **Description:**
 - Implement a Rich Text Editor (e.g., TipTap or Slate).
 - Allow input of functional and non-functional requirements.
@@ -75,7 +89,7 @@
 
 ---
 
-### FRONT-004: Document Preview & WebSocket Integration
+### FRONT-004: Document Preview & WebSocket Integration (DONE)
 **Description:**
 - Implement split-screen view.
 - Render Markdown and Mermaid/PlantUML diagrams.
@@ -97,7 +111,7 @@
 
 ---
 
-### FRONT-005: Refinement & Export Features
+### FRONT-005: Refinement & Export Features (DONE)
 **Description:**
 - **Refinement:** Implement UI for section-level comments to trigger partial regeneration.
 - **Export:** Implement actions to export documents as Markdown, PDF, and HTML.

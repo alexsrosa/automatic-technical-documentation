@@ -4,7 +4,7 @@
 
 ## Steps
 
-### CORE-001: Core Service Scaffolding (Hexagonal)
+### CORE-001: Core Service Scaffolding (Hexagonal) (DONE)
 **Description:**
 - Setup Spring Boot project for `doc-core-service`.
 - Create package structure: `domain`, `application`, `infrastructure`.
@@ -25,7 +25,7 @@
 
 ---
 
-### CORE-002: Domain Modeling & Ports
+### CORE-002: Domain Modeling & Ports (DONE)
 **Description:**
 - Define entities: `Project`, `Document`, `Requirement`.
 - Define Repository interfaces (Output Ports).
@@ -47,7 +47,7 @@
 
 ---
 
-### CORE-003: MongoDB Adapter Implementation
+### CORE-003: MongoDB Adapter Implementation (DONE)
 **Description:**
 - Implement Repository interfaces using Spring Data MongoDB.
 - Configure MongoDB connection.
@@ -67,7 +67,7 @@
 
 ---
 
-### CORE-004: RabbitMQ Publisher Adapter
+### CORE-004: RabbitMQ Publisher Adapter (DONE)
 **Description:**
 - Implement the `EventPublisher` port.
 - Configure Spring AMQP to publish messages to the `doc-generation-exchange`.
@@ -86,7 +86,7 @@
 
 ---
 
-### CORE-005: Application Services & REST API
+### CORE-005: Application Services & REST API (DONE)
 **Description:**
 - Implement Use Cases (`CreateProject`, `RequestGeneration`).
 - Create REST Controllers (`ProjectController`, `DocumentController`).
@@ -109,7 +109,7 @@
 
 ---
 
-### CORE-006: Hexagonal Refactoring & API Hardening
+### CORE-006: Hexagonal Refactoring & API Hardening (DONE)
 **Description:**
 - **Hexagonal Purity:** Refactor Controllers to interact *only* with Use Case interfaces (Input Ports), removing any direct dependencies on Repositories.
 - **DTO Implementation:** Introduce `record` based DTOs (`CreateProjectRequest`, `ProjectResponse`) to decouple API contracts from Domain Entities.
