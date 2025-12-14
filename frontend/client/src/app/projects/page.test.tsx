@@ -21,6 +21,9 @@ jest.mock("lucide-react", () => ({
   Plus: () => <span>PlusIcon</span>,
   Folder: () => <span>FolderIcon</span>,
   AlertCircle: () => <span>AlertIcon</span>,
+  Search: () => <span>SearchIcon</span>,
+  Clock: () => <span>ClockIcon</span>,
+  Calendar: () => <span>CalendarIcon</span>,
 }));
 
 describe("ProjectsPage", () => {
@@ -30,7 +33,10 @@ describe("ProjectsPage", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    (useSession as jest.Mock).mockReturnValue({ data: { accessToken: "mock-token" } });
+    (useSession as jest.Mock).mockReturnValue({ 
+      data: { accessToken: "mock-token" },
+      status: "authenticated" 
+    });
     (useApi as jest.Mock).mockReturnValue(mockApi);
   });
 
@@ -49,6 +55,7 @@ describe("ProjectsPage", () => {
         name: "Test Project",
         description: "Test Description",
         createdAt: "2023-01-01T00:00:00Z",
+        updatedAt: "2023-01-02T00:00:00Z",
       },
     ];
     mockApi.get.mockResolvedValue({ data: projects });

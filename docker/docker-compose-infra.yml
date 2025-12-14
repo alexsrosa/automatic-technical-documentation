@@ -52,6 +52,7 @@ services:
       - postgres-keycloak
     volumes:
       - ./config/realm-export.json:/opt/keycloak/data/import/realm-export.json
+      - ../infrastructure/keycloak/themes/docgen-theme:/opt/keycloak/themes/docgen-theme
     networks:
       - docgen-network
 

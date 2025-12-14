@@ -1,21 +1,44 @@
 {
-  "id": "DocGenRealm",
-  "realm": "DocGenRealm",
+  "id": "docgen",
+  "realm": "docgen",
   "enabled": true,
   "sslRequired": "none",
+  "loginTheme": "docgen-theme",
+  "users": [
+    {
+      "username": "user",
+      "enabled": true,
+      "email": "user@example.com",
+      "firstName": "Test",
+      "lastName": "User",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "password",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "user"
+      ]
+    }
+  ],
   "clients": [
     {
-      "clientId": "docgen-web",
+      "clientId": "docgen-frontend",
       "enabled": true,
-      "publicClient": true,
+      "publicClient": false,
+      "secret": "change-me",
       "redirectUris": [
-        "http://localhost:3000/*"
+        "http://localhost:4000/*"
       ],
       "webOrigins": [
-        "http://localhost:3000"
+        "http://localhost:4000"
       ],
       "standardFlowEnabled": true,
-      "directAccessGrantsEnabled": true
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": true,
+      "authorizationServicesEnabled": true
     }
   ],
   "roles": {
